@@ -1,33 +1,35 @@
 package org.example;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 import org.jetbrains.annotations.Nullable;
 
-public class Main {
-  public static void main(String[] args) {
-  }
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-  // Nullable warning example
-  static void log(@Nullable Object x) {
+public class Main {
+
+  static void displayCompilerActualValueWarning(Object x) { // argument always null warning
     System.out.println(x.toString());
   }
 
-  static void foo() {
-    log(null);
+  static void displayCompilerNullArgumentWarning() {
+    displayCompilerActualValueWarning(null); // null used for parameter annotated as @NotNull (default)
   }
 
-  static void displayErrorProneWarning() {
-    //Set<Short> s = new HashSet<>();
-    //for (short i = 0; i < 100; i++) {
-    //  s.add(i);
-    //  s.remove(i - 1);
-    //}
-    //System.out.println(s.size());
-    //
-    //LocalDateTime d = LocalDateTime.parse("2009-06-15T13/*:45:30");
-    //d.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); // ERROR*/
+  // Nullable warning example
+  static void displayCompilerNullPointerExceptionWarning(@Nullable Object x) {
+    System.out.println(x.toString()); // NullPointerException warning
+  }
+
+  static void displayCompilerError() {
+    Set<Short> s = new HashSet<>();
+    for (short i = 0; i < 100; i++) {
+      s.add(i);
+//      s.remove(i - 1); // CollectionIncompatibleType error
+    }
+    System.out.println(s.size());
+
+    LocalDateTime d = LocalDateTime.parse("2009-06-15T13/*:45:30");
+//    d.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); // ReturnValueIgnored error
   }
 }
